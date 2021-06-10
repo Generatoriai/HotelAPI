@@ -19,8 +19,7 @@ public class FirstController {
      * @return String type text
      */
     @RequestMapping("/")
-    public String index() throws Exception  {
-        HotelApiRepository.getInfo(424023);
+    public String index(){
         return "Information for Game";
     }
 }

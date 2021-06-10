@@ -112,7 +112,8 @@ public class HotelApiRepository {
 //        }
     }
 
-   public static List<hotel> getHotelID() throws Exception {
+   public static List<hotel> getHotelID(String title) throws Exception {
+        getLatitude(title);
         JSONParser parse = new JSONParser();
         //grazint visus id, ir isrenkam info
 

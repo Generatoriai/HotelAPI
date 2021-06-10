@@ -32,7 +32,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping(value = "/hotel", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HotelResourceController {
 
-
+    private String titleCountry;
 
     /**
      * "getGameAll" Request to get the entire list of games
@@ -41,21 +41,19 @@ public class HotelResourceController {
      */
 
     @GetMapping("/{title}")
-    public ResponseEntity<CollectionModel<EntityModel<hotel>>> getAllHotel(@PathVariable String title) throws Exception {
+    public ResponseEntity<CollectionModel<EntityModel<hotel>>> getAllHotel(@PathVariable String title) {
+        titleCountry = title;
+        try {
+            List<EntityModel<hotel>> games = HotelApiRepository.getHotelID(title).stream().map(
+                    game -> EntityModel.of(game,
+                            linkTo(methodOn(HotelResourceController.class).getHotel(game.getId())).withSelfRel(),
+                            linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"))
+            ).collect(Collectors.toList());
 
-        List<EntityModel<hotel>> games = HotelApiRepository.getHotelID().stream().map(
-                game -> {
-                    try {
-                        return EntityModel.of(game,
-                                linkTo(methodOn(HotelResourceController.class).getGame(game.getId())).withSelfRel(),
-                                linkTo(methodOn(HotelResourceController.class).getAllHotel(title)).withRel("get-all"));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-        ).collect(Collectors.toList());
-
-        return ResponseEntity.ok(CollectionModel.of(games,linkTo(methodOn(HotelResourceController.class).getAllHotel()).withSelfRel()));
+            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withSelfRel()));
+        } catch (Exception exc) {
+            return null;
+        }
     }
 
     /**
@@ -65,15 +63,18 @@ public class HotelResourceController {
      * @return one game resource
      */
 
-    @GetMapping("/{id}")
-    public ResponseEntity<EntityModel<hotel>> getHotel(@PathVariable int id) throws Exception{
-
+    @GetMapping("/id/{id}")
+    public ResponseEntity<EntityModel<hotel>> getHotel(@PathVariable int id) {
+    try {
         EntityModel<hotel> model = EntityModel.of(HotelApiRepository.getInfo(id));
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        model.add(Link.of(uriString,"self"));
-        model.add(linkTo(methodOn(HotelResourceController.class).getAllHotel()).withRel("get-all"));
+        model.add(Link.of(uriString, "self"));
+        model.add(linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"));
 
         return ResponseEntity.ok(model);
+    }catch (Exception exc){
+        return null;
+        }
     }
 
     /**
