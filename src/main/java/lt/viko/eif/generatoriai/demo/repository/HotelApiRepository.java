@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import lt.viko.eif.generatoriai.demo.api.CoordinatesAPI;
 import lt.viko.eif.generatoriai.demo.api.HotelAPI;
 import lt.viko.eif.generatoriai.demo.api.InfoAPI;
+import lt.viko.eif.generatoriai.demo.model.Transport;
 import lt.viko.eif.generatoriai.demo.model.hotel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -42,11 +43,12 @@ public class HotelApiRepository {
     }
 
     //iraso zmogus id
-    static void getInfo(int id) throws IOException, ParseException {
+    public static hotel getInfo(int id) throws IOException, ParseException {
         //info hotel one
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject)parse.parse(InfoAPI.getHotelInfo(id));
-        JSONObject jsonObject1 = (JSONObject) jsonObject.get("body");
+        JSONObject jsonObject2 = (JSONObject) jsonObject.get("data");
+        JSONObject jsonObject1 = (JSONObject) jsonObject2.get("body");
         JSONObject mainObj = (JSONObject) jsonObject1.get("propertyDescription");
 
         JSONObject jsonO = (JSONObject) mainObj.get("address");
@@ -66,17 +68,42 @@ public class HotelApiRepository {
 
         jsonO = (JSONObject) jsonObject1.get("guestReviews");
         json1 = (JSONObject) jsonO.get("brands");
-        int averagePeopleReit = Integer.parseInt(String.valueOf(json1.get("rating")));
+        float averagePeopleReit = Float.parseFloat(String.valueOf(json1.get("rating")));
         int numPeople = Integer.parseInt(String.valueOf(json1.get("total")));
 
+        mainObj = (JSONObject) jsonObject1.get("specialFeatures");
+        List<String> feature = new ArrayList<>();
+        JSONArray arrJ = (JSONArray) mainObj.get("sections");
+        for(int k = 0; k <arrJ.size();k++){
+            JSONObject jj = (JSONObject) arrJ.get(k);
+            feature.add(String.valueOf(jj.get("heading")));
+        }
+
+
+        jsonObject1 = (JSONObject) jsonObject.get("transportation");
+        arr = (JSONArray) jsonObject1.get("transportLocations");
+        List<Transport> trasnport =new ArrayList<>();
+        for(int i = 0; i <arr.size();i++){
+            JSONObject js = (JSONObject) arr.get(i);
+            String transportCategory = String.valueOf(js.get("category"));
+
+            JSONArray ja = (JSONArray) js.get("locations");
+            List<String> locations = new ArrayList<>();
+            for(int j = 0;j < ja.size();j++){
+                JSONObject jjo = (JSONObject) ja.get(j);
+                locations.add(String.valueOf(jjo.get("name")));
+            }
+            trasnport.add(new Transport(transportCategory,locations));
+        }
 
 
 
 
 
-        hotel hotelinfo = new hotel(,id)
 
-
+        hotel hotelinfo = new hotel(titleHotel,ratingHotel,address,id,priceMin,roomType,feature,
+        trasnport,averagePeopleReit,numPeople);
+        return hotelinfo;
        // System.out.println(InfoAPI.getHotelInfo(id));
 
 //        JSONArray jsonarr_1 = (JSONArray) jsonObject.get("result");
@@ -85,7 +112,7 @@ public class HotelApiRepository {
 //        }
     }
 
-    static void getHotelID() throws Exception {
+   public static List<hotel> getHotelID() throws Exception {
         JSONParser parse = new JSONParser();
         //grazint visus id, ir isrenkam info
 
@@ -96,11 +123,8 @@ public class HotelApiRepository {
         JSONObject jsonarr_3 = (JSONObject) jsonarr_2.get("searchResults");
         JSONArray jsonarr = (JSONArray) jsonarr_3.get("results");
         listHotelMain = getHotelAll(jsonarr);
+        return listHotelMain;
 
-        for(hotel h :listHotelMain){
-            //pakeist i visa info
-            System.out.println(h.getTitle());
-        }
         //for gaut visus id
 //        JSONObject mainOb = (JSONObject) jsonarr.get(0);
 //        int id  = Integer.parseInt(String.valueOf(mainOb.get("id")));

@@ -1,7 +1,11 @@
 package lt.viko.eif.generatoriai.demo.controllers;
 
+import lt.viko.eif.generatoriai.demo.repository.HotelApiRepository;
+import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 /**
  * First controller
@@ -15,7 +19,8 @@ public class FirstController {
      * @return String type text
      */
     @RequestMapping("/")
-    public String index(){
+    public String index() throws Exception  {
+        HotelApiRepository.getInfo(424023);
         return "Information for Game";
     }
 }
