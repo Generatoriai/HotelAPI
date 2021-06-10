@@ -11,13 +11,12 @@ public class hotel {
     private String price;
     private List<String> roomTypeNames;
     private String features;
-    private String transportType;
-    private String transportLocation;
+    private List<Transport> transports;
     private int rating;
     private int reviews; //kiek zmoniu reitingavo
 
-    public hotel(String title, float star, String addres, int id, String name, String price, List<String> roomTypeNames, String features, String transportType,
-    String transportLocation, int rating, int reviews) {
+    public hotel(String title, float star, String addres, int id, String name, String price, List<String> roomTypeNames, String features,
+                 List<Transport> transports, int rating, int reviews) {
         this.title = title;
         this.star = star;
         this.addres = addres;
@@ -26,8 +25,7 @@ public class hotel {
         this.price = price;
         this.roomTypeNames = roomTypeNames;
         this.features = features;
-        this.transportType = transportType;
-        this.transportLocation = transportLocation;
+        this.transports = transports;
         this.rating = rating;
         this.reviews = reviews;
     }
@@ -87,13 +85,9 @@ public class hotel {
 
     public void setFeatures(String features) { this.features = features; }
 
-    public String getTransportType() { return transportType; }
+    public List<Transport> getTransports() { return transports; }
 
-    public void setTransportType(String transportType) { this.transportType = transportType; }
-
-    public String getTransportLocation() { return transportLocation; }
-
-    public void setTransportLocation(String transportLocation) { this.transportLocation = transportLocation; }
+    public void setTransports(List<Transport> transports) { this.transports = transports; }
 
     public int getRating() { return rating; }
 
