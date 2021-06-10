@@ -1,5 +1,6 @@
 package lt.viko.eif.generatoriai.demo.repository;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import lt.viko.eif.generatoriai.demo.api.CoordinatesAPI;
 import lt.viko.eif.generatoriai.demo.api.HotelAPI;
 import lt.viko.eif.generatoriai.demo.api.InfoAPI;
@@ -40,12 +41,43 @@ public class HotelApiRepository {
         response = HotelAPI.getHotel((Double) mainObject.get("lat"), (Double) mainObject.get("lng"));
     }
 
+    //iraso zmogus id
     static void getInfo(int id) throws IOException, ParseException {
         //info hotel one
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject)parse.parse(InfoAPI.getHotelInfo(id));
+        JSONObject jsonObject1 = (JSONObject) jsonObject.get("body");
+        JSONObject mainObj = (JSONObject) jsonObject1.get("propertyDescription");
 
-        System.out.println(InfoAPI.getHotelInfo(id));
+        JSONObject jsonO = (JSONObject) mainObj.get("address");
+        String address = String.valueOf(jsonO.get("fullAddress"));
+        String titleHotel = String.valueOf(mainObj.get("name"));
+        float ratingHotel = Float.parseFloat(String.valueOf(mainObj.get("starRating")));
+        jsonO = (JSONObject) mainObj.get("featuredPrice");
+        JSONObject json1 = (JSONObject) jsonO.get("currentPrice");
+
+        String priceMin = String.valueOf(json1.get("formatted"));
+
+        List<String> roomType = new ArrayList<>();
+        JSONArray arr = (JSONArray) mainObj.get("roomTypeNames");
+        for(int i =0;i < arr.size();i++) {
+            roomType.add(String.valueOf(arr.get(i)));
+        }
+
+        jsonO = (JSONObject) jsonObject1.get("guestReviews");
+        json1 = (JSONObject) jsonO.get("brands");
+        int averagePeopleReit = Integer.parseInt(String.valueOf(json1.get("rating")));
+        int numPeople = Integer.parseInt(String.valueOf(json1.get("total")));
+
+
+
+
+
+
+        hotel hotelinfo = new hotel(,id)
+
+
+       // System.out.println(InfoAPI.getHotelInfo(id));
 
 //        JSONArray jsonarr_1 = (JSONArray) jsonObject.get("result");
 //        for(int i=0; i<jsonarr_1.size();i++){
