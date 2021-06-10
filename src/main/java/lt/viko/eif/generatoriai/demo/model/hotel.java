@@ -13,7 +13,7 @@ public class hotel {
     private String features;
     private List<Transport> transports;
     private int rating;
-    private int reviews; //kiek zmoniu reitingavo x
+    private int reviews; //kiek zmoniu reitingavo
 
     public hotel(String title, float star, String addres, int id, String name, String price, List<String> roomTypeNames, String features,
                  List<Transport> transports, int rating, int reviews) {
