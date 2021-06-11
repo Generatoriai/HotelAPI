@@ -4,6 +4,7 @@ package lt.viko.eif.generatoriai.demo.controllers;
 
 
 import lt.viko.eif.generatoriai.demo.model.Hotel;
+import lt.viko.eif.generatoriai.demo.model.attraction;
 import lt.viko.eif.generatoriai.demo.repository.HotelApiRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -77,10 +78,11 @@ public class HotelResourceController {
         }
     }
 
+
     @GetMapping("/attractions/{countryTitle}")
-    public ResponseEntity<CollectionModel<EntityModel<String>>> getAttractions(@PathVariable String countryTitle) {
+    public ResponseEntity<CollectionModel<EntityModel<attraction>>> getAttractions(@PathVariable String countryTitle) {
         try {
-            List<EntityModel<String>> games = HotelApiRepository.getSuggesionRep(countryTitle).stream().map(
+            List<EntityModel<attraction>> games = HotelApiRepository.getSuggesionRep(countryTitle).stream().map(
                     game -> EntityModel.of(game,
                             linkTo(methodOn(HotelResourceController.class).getHotel(0)).withSelfRel(),
                             linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"))

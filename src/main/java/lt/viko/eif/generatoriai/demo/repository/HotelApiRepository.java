@@ -5,6 +5,7 @@ import lt.viko.eif.generatoriai.demo.api.HotelAPI;
 import lt.viko.eif.generatoriai.demo.api.InfoAPI;
 import lt.viko.eif.generatoriai.demo.model.Transport;
 import lt.viko.eif.generatoriai.demo.model.Hotel;
+import lt.viko.eif.generatoriai.demo.model.attraction;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -163,9 +164,9 @@ public class HotelApiRepository {
         return hotelList;
     }
 
-    public static List<String> getSuggesionRep(String countryTitle) throws Exception{
+    public static List<attraction> getSuggesionRep(String countryTitle) throws Exception{
         JSONParser parse = new JSONParser();
-        List<String> stringList = new ArrayList<>();
+        List<attraction> stringList = new ArrayList<>();
         JSONObject jsonObject = (JSONObject)parse.parse(InfoAPI.getEntityInfo(countryTitle));
         JSONArray arr = (JSONArray) jsonObject.get("suggestions");
         JSONObject jsonObject_find = null;
@@ -179,7 +180,7 @@ public class HotelApiRepository {
         arr = (JSONArray) jsonObject_find.get("entities");
         for(int i = 0;i < arr.size();i++){
             JSONObject json = (JSONObject) arr.get(i);
-            stringList.add(String.valueOf(json.get("name")));
+            stringList.add(new attraction(String.valueOf(json.get("name"))));
         }
 
         return stringList;
