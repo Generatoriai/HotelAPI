@@ -77,12 +77,12 @@ public class HotelResourceController {
         }
     }
 
-    @GetMapping("/attractions/{String}")
+    @GetMapping("/attractions/{countryTitle}")
     public ResponseEntity<CollectionModel<EntityModel<String>>> getAttractions(@PathVariable String countryTitle) {
         try {
             List<EntityModel<String>> games = HotelApiRepository.getSuggesionRep(countryTitle).stream().map(
                     game -> EntityModel.of(game,
-                            //linkTo(methodOn(HotelResourceController.class).getHotel(0)).withSelfRel(),
+                            linkTo(methodOn(HotelResourceController.class).getHotel(0)).withSelfRel(),
                             linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"))
             ).collect(Collectors.toList());
 
