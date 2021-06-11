@@ -2,7 +2,7 @@ package lt.viko.eif.generatoriai.demo.model;
 
 import java.util.List;
 
-public class hotel {
+public class Hotel {
     private String title;
     private float star;
     private String addres;
@@ -14,7 +14,7 @@ public class hotel {
     private float rating;
     private int reviews; //kiek zmoniu reitingavo
 
-    public hotel(String title, float star, String addres, int id, String price, List<String> roomTypeNames, List<String> features, List<Transport> transportList, float rating, int reviews) {
+    public Hotel(String title, float star, String addres, int id, String price, List<String> roomTypeNames, List<String> features, List<Transport> transportList, float rating, int reviews) {
         this.title = title;
         this.star = star;
         this.addres = addres;
@@ -27,7 +27,7 @@ public class hotel {
         this.reviews = reviews;
     }
 
-    public hotel(String title, float star, String addres, int id) {
+    public Hotel(String title, float star, String addres, int id) {
         this.title = title;
         this.star = star;
         this.addres = addres;

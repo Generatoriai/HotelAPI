@@ -1,11 +1,10 @@
 package lt.viko.eif.generatoriai.demo.repository;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import lt.viko.eif.generatoriai.demo.api.CoordinatesAPI;
 import lt.viko.eif.generatoriai.demo.api.HotelAPI;
 import lt.viko.eif.generatoriai.demo.api.InfoAPI;
 import lt.viko.eif.generatoriai.demo.model.Transport;
-import lt.viko.eif.generatoriai.demo.model.hotel;
+import lt.viko.eif.generatoriai.demo.model.Hotel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,7 +16,7 @@ import java.util.List;
 
 public class HotelApiRepository {
     private static String response;
-    private static List<hotel> listHotelMain;
+    private static List<Hotel> listHotelMain;
 
 
     static void getLatitude(String titleCountry) throws IOException, ParseException {
@@ -43,7 +42,7 @@ public class HotelApiRepository {
     }
 
     //iraso zmogus id
-    public static hotel getInfo(int id) throws IOException, ParseException {
+    public static Hotel getInfo(int id) throws IOException, ParseException {
         //info hotel one
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject)parse.parse(InfoAPI.getHotelInfo(id));
@@ -101,7 +100,7 @@ public class HotelApiRepository {
 
 
 
-        hotel hotelinfo = new hotel(titleHotel,ratingHotel,address,id,priceMin,roomType,feature,
+        Hotel hotelinfo = new Hotel(titleHotel,ratingHotel,address,id,priceMin,roomType,feature,
         trasnport,averagePeopleReit,numPeople);
         return hotelinfo;
        // System.out.println(InfoAPI.getHotelInfo(id));
@@ -112,7 +111,7 @@ public class HotelApiRepository {
 //        }
     }
 
-   public static List<hotel> getHotelID(String title) throws Exception {
+   public static List<Hotel> getHotelID(String title) throws Exception {
         getLatitude(title);
         JSONParser parse = new JSONParser();
         //grazint visus id, ir isrenkam info
@@ -150,15 +149,39 @@ public class HotelApiRepository {
 
     }
 
-    public static List<hotel> getHotelAll(JSONArray jsonArr) throws Exception{
-        List<hotel> hotelList = new ArrayList<>();
+
+
+    public static List<Hotel> getHotelAll(JSONArray jsonArr) throws Exception{
+        List<Hotel> hotelList = new ArrayList<>();
 
         for(int i = 0; i < jsonArr.size(); i++){
             JSONObject mainJ = (JSONObject) jsonArr.get(i);
             JSONObject loc = (JSONObject) mainJ.get("address");
-            hotelList.add(new hotel(String.valueOf(mainJ.get("name")),Float.parseFloat(String.valueOf(mainJ.get("starRating")))
+            hotelList.add(new Hotel(String.valueOf(mainJ.get("name")),Float.parseFloat(String.valueOf(mainJ.get("starRating")))
                     ,String.valueOf(loc.get("streetAddress")),Integer.parseInt(String.valueOf(mainJ.get("id")))));
         }
         return hotelList;
+    }
+
+    public static List<String> getSuggesionRep(String countryTitle) throws Exception{
+        JSONParser parse = new JSONParser();
+        List<String> stringList = new ArrayList<>();
+        JSONObject jsonObject = (JSONObject)parse.parse(InfoAPI.getEntityInfo(countryTitle));
+        JSONArray arr = (JSONArray) jsonObject.get("suggestions");
+        JSONObject jsonObject_find = null;
+        for(int i = 0; i < arr.size();i++){
+            JSONObject json = (JSONObject) arr.get(i);
+            if(String.valueOf(json.get("group")).equals("LANDMARK_GROUP")){
+                jsonObject_find = json;
+                break;
+            }
+        }
+        arr = (JSONArray) jsonObject_find.get("entities");
+        for(int i = 0;i < arr.size();i++){
+            JSONObject json = (JSONObject) arr.get(i);
+            stringList.add(String.valueOf(json.get("name")));
+        }
+
+        return stringList;
     }
 }

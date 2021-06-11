@@ -3,7 +3,7 @@ package lt.viko.eif.generatoriai.demo.controllers;
 
 
 
-import lt.viko.eif.generatoriai.demo.model.hotel;
+import lt.viko.eif.generatoriai.demo.model.Hotel;
 import lt.viko.eif.generatoriai.demo.repository.HotelApiRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -41,10 +41,10 @@ public class HotelResourceController {
      */
 
     @GetMapping("/{title}")
-    public ResponseEntity<CollectionModel<EntityModel<hotel>>> getAllHotel(@PathVariable String title) {
+    public ResponseEntity<CollectionModel<EntityModel<Hotel>>> getAllHotel(@PathVariable String title) {
         titleCountry = title;
         try {
-            List<EntityModel<hotel>> games = HotelApiRepository.getHotelID(title).stream().map(
+            List<EntityModel<Hotel>> games = HotelApiRepository.getHotelID(title).stream().map(
                     game -> EntityModel.of(game,
                             linkTo(methodOn(HotelResourceController.class).getHotel(game.getId())).withSelfRel(),
                             linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"))
@@ -64,9 +64,9 @@ public class HotelResourceController {
      */
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<EntityModel<hotel>> getHotel(@PathVariable int id) {
+    public ResponseEntity<EntityModel<Hotel>> getHotel(@PathVariable int id) {
     try {
-        EntityModel<hotel> model = EntityModel.of(HotelApiRepository.getInfo(id));
+        EntityModel<Hotel> model = EntityModel.of(HotelApiRepository.getInfo(id));
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         model.add(Link.of(uriString, "self"));
         model.add(linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"));
@@ -74,6 +74,21 @@ public class HotelResourceController {
         return ResponseEntity.ok(model);
     }catch (Exception exc){
         return null;
+        }
+    }
+
+    @GetMapping("/attractions/{String}")
+    public ResponseEntity<CollectionModel<EntityModel<String>>> getAttractions(@PathVariable String countryTitle) {
+        try {
+            List<EntityModel<String>> games = HotelApiRepository.getSuggesionRep(countryTitle).stream().map(
+                    game -> EntityModel.of(game,
+                            //linkTo(methodOn(HotelResourceController.class).getHotel(0)).withSelfRel(),
+                            linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"))
+            ).collect(Collectors.toList());
+
+            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getAllHotel(countryTitle)).withSelfRel()));
+        } catch (Exception exc) {
+            return null;
         }
     }
 

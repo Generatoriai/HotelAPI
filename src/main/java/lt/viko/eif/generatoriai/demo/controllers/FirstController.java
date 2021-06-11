@@ -20,6 +20,6 @@ public class FirstController {
      */
     @RequestMapping("/")
     public String index(){
-        return "Information for Game";
+        return "Information for Hotel and More";
     }
 }

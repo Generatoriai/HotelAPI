@@ -23,4 +23,19 @@ public class InfoAPI {
         String responseString = response.body().string();
         return responseString;
     }
+
+    public static String getEntityInfo(String countryTitle) throws IOException{
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://hotels4.p.rapidapi.com/locations/search?query=" + countryTitle + "&locale=en_US")
+                .get()
+                .addHeader("x-rapidapi-key", "37b63ccbf7mshcd66e21c580e21ep1a328djsndacc86e2bdbd")
+                .addHeader("x-rapidapi-host", "hotels4.p.rapidapi.com")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        String responseString = response.body().string();
+        return responseString;
+    }
 }
