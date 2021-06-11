@@ -2,6 +2,7 @@ package lt.viko.eif.generatoriai.demo.controllers;
 
 import lt.viko.eif.generatoriai.demo.model.Hotel;
 import lt.viko.eif.generatoriai.demo.model.attraction;
+import lt.viko.eif.generatoriai.demo.model.reiting;
 import lt.viko.eif.generatoriai.demo.repository.HotelApiRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -93,12 +94,20 @@ public class HotelResourceController {
         }
     }
 
-    /**
-     * "deleteGame" Request to delete a game by name
-     *
-     * @param title - String game title
-     * @return game resource list
-     */
+    @GetMapping("/rating/{id}")
+    public ResponseEntity<CollectionModel<EntityModel<reiting>>> getReiting(@PathVariable int id) {
+        try {
+            List<EntityModel<reiting>> games = HotelApiRepository.getListReiting(id).stream().map(
+                    game -> EntityModel.of(game,
+                            linkTo(methodOn(HotelResourceController.class).getHotel(id)).withRel("get-all"))
+            ).collect(Collectors.toList());
+
+            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getHotel(id)).withSelfRel()));
+        } catch (Exception exc) {
+            return null;
+        }
+    }
+
 
     //@DeleteMapping("/{title}")
 //    public ResponseEntity<CollectionModel<EntityModel<Game>>> deleteGame(@PathVariable String title){

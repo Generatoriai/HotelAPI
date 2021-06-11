@@ -34,4 +34,19 @@ public class HotelAPI {
         String responseString = response.body().string();
         return responseString;
     }
+
+    public static String getReveiw(int id)throws IOException{
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://hotels-com-free.p.rapidapi.com/mobile_service/property-content/v1/hotels.com/property/" + id + "/reviews?loc=en_US&page=1")
+                .get()
+                .addHeader("x-rapidapi-key", "37b63ccbf7mshcd66e21c580e21ep1a328djsndacc86e2bdbd")
+                .addHeader("x-rapidapi-host", "hotels-com-free.p.rapidapi.com")
+                .build();
+
+        Response response = client.newCall(request).execute();
+        String responseString = response.body().string();
+        return responseString;
+    }
 }

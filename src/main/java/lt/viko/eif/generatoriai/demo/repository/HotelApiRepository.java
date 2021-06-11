@@ -6,6 +6,7 @@ import lt.viko.eif.generatoriai.demo.api.InfoAPI;
 import lt.viko.eif.generatoriai.demo.model.Transport;
 import lt.viko.eif.generatoriai.demo.model.Hotel;
 import lt.viko.eif.generatoriai.demo.model.attraction;
+import lt.viko.eif.generatoriai.demo.model.reiting;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -185,4 +186,21 @@ public class HotelApiRepository {
 
         return stringList;
     }
+
+    public static List<reiting> getListReiting(int id) throws IOException, ParseException {
+        JSONParser parse = new JSONParser();
+        List<reiting> reitingList = new ArrayList<>();
+        JSONObject jsonObject = (JSONObject) parse.parse(HotelAPI.getReveiw(id));
+        JSONObject jsonObject1 = (JSONObject) jsonObject.get("reviewData");
+        JSONObject jsonObject2 = (JSONObject) jsonObject1.get("guestReviewGroups");
+        JSONArray arrJson = (JSONArray) jsonObject2.get("guestReviews");
+       JSONObject jsonArr = (JSONObject) arrJson.get(0);
+       JSONArray arrMAin = (JSONArray) jsonArr.get("reviews");
+       for(int i = 0; i < arrMAin.size();i++){
+           JSONObject js = (JSONObject) arrMAin.get(i);
+           reitingList.add(new reiting(String.valueOf(js.get("summary")),String.valueOf(js.get("title")),Float.parseFloat(String.valueOf(js.get("formattedRating"))),
+                   String.valueOf(js.get("qualitativeBadgeText"))));
+       }
+       return reitingList;
+       }
 }
