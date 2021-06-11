@@ -9,5 +9,5 @@ public class HotelApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HotelApiApplication.class, args);
 	}
-//kkjdj
+//kkjd
 }
