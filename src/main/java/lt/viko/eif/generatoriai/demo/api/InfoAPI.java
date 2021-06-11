@@ -14,9 +14,9 @@ public class InfoAPI {
     /***
      *  Getting needed information about hotel.
      *
-     * @param id
-     * @return
-     * @throws IOException
+     * @param id - id in Integer type
+     * @return responseString in String type
+     * @throws IOException - this exception exception occurs when invalid input or invalid output has occurred.
      */
     public static String getHotelInfo(int id) throws IOException {
         OkHttpClient client = new OkHttpClient();

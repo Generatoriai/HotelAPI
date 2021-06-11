@@ -14,9 +14,9 @@ public class CoordinatesAPI {
     /**
      *  Getting coordinates of needed city.
      *
-     * @param city
-     * @return
-     * @throws IOException
+     * @param city variable in String type
+     * @return responseString in String type
+     * @throws IOException - this exception exception occurs when invalid input or invalid output has occurred.
      */
     public static String getResponse(String city) throws IOException {
         OkHttpClient client = new OkHttpClient();

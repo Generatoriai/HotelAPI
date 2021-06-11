@@ -28,8 +28,8 @@ public class Hotel {
      * @param roomTypeNames - types of rooms existing in a hotels
      * @param features - hotels features
      * @param transportList - public transport to and out of hotel
-     * @param rating - rating???
-     * @param reviews - rating???
+     * @param rating - hotel rating which is based on the visitor
+     * @param reviews - hotel reviews which is based on the visitor
      */
     public Hotel(String title, float star, String addres, int id, String price, List<String> roomTypeNames, List<String> features, List<Transport> transportList, float rating, int reviews) {
         this.title = title;
@@ -192,30 +192,30 @@ public class Hotel {
     }
 
     /**
-     * Getter for
+     * Getter for hotel rating
      *
-     * @return
+     * @return hotel rating
      */
     public float getRating() { return rating; }
 
     /**
-     * Setter for
+     * Setter for hotel rating
      *
-     * @param rating
+     * @param rating - hotel rating in float type
      */
     public void setRating(float rating) { this.rating = rating; }
 
     /**
-     * Getter for
+     * Getter for hotel reviews
      *
-     * @return
+     * @return hotel reviews
      */
     public int getReviews() { return reviews; }
 
     /**
-     * Setter for
+     * Setter for hotel reviews
      *
-     * @param reviews
+     * @param reviews - hotel reviews in Integer type
      */
     public void setReviews(int reviews) { this.reviews = reviews; }
 }

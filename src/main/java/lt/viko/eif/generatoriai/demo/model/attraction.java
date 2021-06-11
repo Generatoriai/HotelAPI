@@ -7,8 +7,8 @@ public class attraction {
     private String title;
 
     /**
-     *
-     * @param title
+     * Constructor of attraction class
+     * @param title - String name of a place
      */
     public attraction(String title) {
         this.title = title;

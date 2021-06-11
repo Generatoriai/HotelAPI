@@ -14,10 +14,10 @@ public class HotelAPI {
     /**
      *  Getting hotels in a city.
      *
-     * @param lng
-     * @param lat
-     * @return
-     * @throws IOException
+     * @param lng longitude in double type
+     * @param lat latitude in double type
+     * @return responseString in String type
+     * @throws IOException - this exception exception occurs when invalid input or invalid output has occurred.
      */
     public static String getHotel(double lng, double lat) throws IOException {
         OkHttpClient client = new OkHttpClient();
