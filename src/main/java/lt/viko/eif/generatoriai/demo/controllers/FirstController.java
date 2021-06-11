@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 /**
- * First controller
+ *  First controller
  */
 @RestController
 public class FirstController {
 
     /**
-     * "index" method is the page stem method
+     * Testing request.
      *
      * @return String type text
      */

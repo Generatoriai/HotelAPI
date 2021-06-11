@@ -6,8 +6,19 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
+/**
+ *  API that is used to get hotels in a city based on it's coordinates.
+ */
 public class HotelAPI {
 
+    /**
+     *  Getting hotels in a city.
+     *
+     * @param lng
+     * @param lat
+     * @return
+     * @throws IOException
+     */
     public static String getHotel(double lng, double lat) throws IOException {
         OkHttpClient client = new OkHttpClient();
 

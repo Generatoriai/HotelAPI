@@ -1,8 +1,5 @@
 package lt.viko.eif.generatoriai.demo.controllers;
 
-
-
-
 import lt.viko.eif.generatoriai.demo.model.Hotel;
 import lt.viko.eif.generatoriai.demo.model.attraction;
 import lt.viko.eif.generatoriai.demo.repository.HotelApiRepository;
@@ -20,15 +17,13 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
 /**
- * Games API Main Controller
+ *  Project's main controller.
  *
  * @author Denis
  * @version 1.0
  * @since 1.0
  */
-
 @RestController
 @RequestMapping(value = "/hotel", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HotelResourceController {
@@ -36,11 +31,11 @@ public class HotelResourceController {
     private String titleCountry;
 
     /**
-     * "getGameAll" Request to get the entire list of games
+     * "getAllHotel" request to get the entire list of hotels.
+     * Getting hotels by the name of a city that they are in.
      *
-     * @return game resource list
+     * @return hotels list
      */
-
     @GetMapping("/{title}")
     public ResponseEntity<CollectionModel<EntityModel<Hotel>>> getAllHotel(@PathVariable String title) {
         titleCountry = title;
@@ -58,12 +53,12 @@ public class HotelResourceController {
     }
 
     /**
-     * "getGame" Request for one game by name
+     * "getHotel" request to get information about specific hotel.
+     * Getting hotels by their ID.
      *
-     * @param id - String game title
-     * @return one game resource
+     * @param id - int hotel ID
+     * @return one hotel's information
      */
-
     @GetMapping("/id/{id}")
     public ResponseEntity<EntityModel<Hotel>> getHotel(@PathVariable int id) {
     try {
@@ -78,7 +73,12 @@ public class HotelResourceController {
         }
     }
 
-
+    /**
+     * "getAttractions" request to get places to visit in a city.
+     *
+     * @param countryTitle - String country name
+     * @return List of places to visit.
+     */
     @GetMapping("/attractions/{countryTitle}")
     public ResponseEntity<CollectionModel<EntityModel<attraction>>> getAttractions(@PathVariable String countryTitle) {
         try {

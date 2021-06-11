@@ -6,8 +6,18 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
+/***
+ *  API that is used to get information on hotels and cities.
+ */
 public class InfoAPI {
 
+    /***
+     *  Getting needed information about hotel.
+     *
+     * @param id
+     * @return
+     * @throws IOException
+     */
     public static String getHotelInfo(int id) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
@@ -24,6 +34,13 @@ public class InfoAPI {
         return responseString;
     }
 
+    /**
+     *  Getting places to visit in a city.
+     *
+     * @param countryTitle
+     * @return
+     * @throws IOException
+     */
     public static String getEntityInfo(String countryTitle) throws IOException{
         OkHttpClient client = new OkHttpClient();
 

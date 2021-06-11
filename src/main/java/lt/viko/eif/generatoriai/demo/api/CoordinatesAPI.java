@@ -6,8 +6,18 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
+/**
+ *  API that is used to get coordinates of a named city.
+ */
 public class CoordinatesAPI {
 
+    /**
+     *  Getting coordinates of needed city.
+     *
+     * @param city
+     * @return
+     * @throws IOException
+     */
     public static String getResponse(String city) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
