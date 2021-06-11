@@ -94,6 +94,12 @@ public class HotelResourceController {
         }
     }
 
+    /**
+     * "getReiting" request to get guests' feedback about hotel.
+     *
+     * @param id - int hotel ID
+     * @return list of feedbacks.
+     */
     @GetMapping("/rating/{id}")
     public ResponseEntity<CollectionModel<EntityModel<reiting>>> getReiting(@PathVariable int id) {
         try {
