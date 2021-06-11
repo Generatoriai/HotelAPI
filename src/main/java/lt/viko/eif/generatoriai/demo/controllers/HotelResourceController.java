@@ -84,8 +84,7 @@ public class HotelResourceController {
         try {
             List<EntityModel<attraction>> games = HotelApiRepository.getSuggesionRep(countryTitle).stream().map(
                     game -> EntityModel.of(game,
-                            linkTo(methodOn(HotelResourceController.class).getHotel(0)).withSelfRel(),
-                            linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"))
+                            linkTo(methodOn(HotelResourceController.class).getAllHotel(countryTitle)).withRel("get-all"))
             ).collect(Collectors.toList());
 
             return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getAllHotel(countryTitle)).withSelfRel()));
