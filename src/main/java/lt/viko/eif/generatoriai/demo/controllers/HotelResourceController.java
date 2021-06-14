@@ -65,7 +65,6 @@ public class HotelResourceController {
         EntityModel<Hotel> model = EntityModel.of(HotelApiRepository.getInfo(id));
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         model.add(Link.of(uriString, "self"));
-        model.add()
 
         return ResponseEntity.ok(model);
     }catch (Exception exc){
