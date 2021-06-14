@@ -7,7 +7,10 @@ import okhttp3.Response;
 import java.io.IOException;
 
 /**
- *  API that is used to get hotels in a city based on it's coordinates.
+ * API that is used to get hotels in a city based on it's coordinates.
+ * @version 1.0
+ * @since 1.0
+ * @author Arminas M. Denis M. Goda M. Lukas A. Deividas K.
  */
 public class HotelAPI {
 

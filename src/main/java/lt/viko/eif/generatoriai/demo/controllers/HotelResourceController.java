@@ -19,11 +19,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
- *  Project's main controller.
- *
- * @author Denis
+ * Project's main controller.
  * @version 1.0
  * @since 1.0
+ * @author Arminas M. Denis M. Goda M. Lukas A. Deividas K.
  */
 @RestController
 @RequestMapping(value = "/hotel", produces = MediaType.APPLICATION_JSON_VALUE)
