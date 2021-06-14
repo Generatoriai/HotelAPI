@@ -4,6 +4,9 @@ import java.util.List;
 
 /**
  * Transport class.
+ * @version 1.0
+ * @since 1.0
+ * @author Arminas M. Denis M. Goda M. Lukas A. Deividas K.
  */
 public class Transport {
     private String title;

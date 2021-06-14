@@ -2,6 +2,9 @@ package lt.viko.eif.generatoriai.demo.model;
 
 /**
  * Class for hotel's feedback information.
+ * @version 1.0
+ * @since 1.0
+ * @author Arminas M. Denis M. Goda M. Lukas A. Deividas K.
  */
 public class reiting {
     private String summary;

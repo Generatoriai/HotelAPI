@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 /**
- *  First controller
+ * First controller
+ * @version 1.0
+ * @since 1.0
+ * @author Arminas M. Denis M. Goda M. Lukas A. Deividas K.
  */
 @RestController
 public class FirstController {
