@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +25,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  */
 @RestController
 @RequestMapping(value = "/hotel", produces = MediaType.APPLICATION_JSON_VALUE)
+
 public class HotelResourceController {
 
     private String titleCountry;

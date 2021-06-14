@@ -28,6 +28,9 @@ public class StepDefinitions {
     private String correctCity = "Vilnius";
     String responseString;
 
+    /**
+     * Test for checking if the response code is ok (200).
+     */
     @Given("Client sends a GET request")
     public void Client_sends_a_GET_request(){
         entity = hrc.getAllHotel("Vilnius");
@@ -43,7 +46,10 @@ public class StepDefinitions {
         assertEquals(expectedAnswer, actualAnswer);
     }
 
-
+    /**
+     * Test for checking if the city in the response is correct.
+     * @throws IOException Signals that an I/O exception of some sort has occurred
+     */
     @Given("Client sends a GET request with a specified city")
     public void clientSendsAGETRequestWithASpecifiedCity() throws IOException {
         responseString = CoordinatesAPI.getResponse(correctCity);
@@ -59,6 +65,12 @@ public class StepDefinitions {
         assertEquals(actualAnswer,correctCity);
     }
 
+    /**
+     * Method for parsing the response to JSONArray and getting the city variable from it
+     * @return city String
+     * @throws IOException Signals that an I/O exception of some sort has occurred.
+     * @throws ParseException Signals that an error has been reached unexpectedly while parsing.
+     */
     String getResponse() throws IOException, ParseException {
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject) parse.parse(CoordinatesAPI.getResponse(correctCity));
