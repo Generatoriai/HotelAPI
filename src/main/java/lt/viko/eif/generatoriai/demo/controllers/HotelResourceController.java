@@ -44,10 +44,10 @@ public class HotelResourceController {
             List<EntityModel<Hotel>> games = HotelApiRepository.getHotelID(title).stream().map(
                     game -> EntityModel.of(game,
                             linkTo(methodOn(HotelResourceController.class).getHotel(game.getId())).withSelfRel(),
-                            linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"))
+                            linkTo(methodOn(HotelResourceController.class).getAllHotel(title)).withRel("get-all"))
             ).collect(Collectors.toList());
 
-            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withSelfRel()));
+            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getAllHotel(title)).withSelfRel()));
         } catch (Exception exc) {
             return null;
         }
@@ -66,7 +66,6 @@ public class HotelResourceController {
         EntityModel<Hotel> model = EntityModel.of(HotelApiRepository.getInfo(id));
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         model.add(Link.of(uriString, "self"));
-        model.add(linkTo(methodOn(HotelResourceController.class).getAllHotel("Vilnius")).withRel("get-all"));
 
         return ResponseEntity.ok(model);
     }catch (Exception exc){
