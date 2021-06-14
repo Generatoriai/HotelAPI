@@ -75,7 +75,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- -->
-		<!-- Swagger Dependencies-->
+		<!-- Swagger Dependencies
 
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -94,7 +94,7 @@
 			<version>3.0.0</version>
 		</dependency>
 
-		<!-- -->
+		 -->
 		<dependency>
 			<groupId>org.apache.clerezza.ext</groupId>
 			<artifactId>org.json.simple</artifactId>

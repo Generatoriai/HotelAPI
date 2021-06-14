@@ -16,12 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * HotelAPIRepository class. Used for extracting wanted responses from the API classes.
- * @version 1.0
- * @since 1.0
- * @author Arminas M. Denis M. Goda M. Lukas A. Deividas K.
- */
 public class HotelApiRepository {
     private static String response;
     private static List<Hotel> listHotelMain;
@@ -37,6 +31,7 @@ public class HotelApiRepository {
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject) parse.parse(CoordinatesAPI.getResponse(titleCountry));
 
+        // System.out.println(CoordinatesAPI.getResponse("Didlaukio g. 63, Vilnius"));
 
         JSONArray jsonarr_1 = (JSONArray) jsonObject.get("results");
         for (int i = 0; i < jsonarr_1.size(); i++) {
@@ -199,8 +194,8 @@ public class HotelApiRepository {
      * a specific hotel.
      * @param id identification of the hotel
      * @return reitingList a list containing all the comments and ratings of a specific hotel
-     * @throws IOException Signals that an I/O exception of some sort has occurred.
-     * @throws ParseException Signals that an error has been reached unexpectedly while parsing.
+     * @throws IOException
+     * @throws ParseException
      */
     public static List<reiting> getListReiting(int id) throws IOException, ParseException {
         JSONParser parse = new JSONParser();

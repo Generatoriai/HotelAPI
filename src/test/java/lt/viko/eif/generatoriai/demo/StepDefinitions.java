@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 public class StepDefinitions {
     private ResponseEntity entity;
     private String actualAnswer;
+    private String actualAnswer1;
     HotelResourceController hrc = new HotelResourceController();
     private String correctCity = "Vilnius";
     String responseString;
@@ -57,12 +58,12 @@ public class StepDefinitions {
 
     @When("Sends HTTP GET request")
     public void sendsHTTPGETRequest() throws IOException, ParseException{
-        actualAnswer = getResponse();
+        actualAnswer1 = getResponse();
     }
 
     @Then("Client receives a correct output")
     public void clientReceivesACorrectOutput() {
-        assertEquals(actualAnswer,correctCity);
+        assertEquals(actualAnswer1,correctCity);
     }
 
     /**
