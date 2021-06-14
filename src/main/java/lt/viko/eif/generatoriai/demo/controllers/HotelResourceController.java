@@ -40,13 +40,13 @@ public class HotelResourceController {
     public ResponseEntity<CollectionModel<EntityModel<Hotel>>> getAllHotel(@PathVariable String title) {
         titleCountry = title;
         try {
-            List<EntityModel<Hotel>> games = HotelApiRepository.getHotelID(title).stream().map(
-                    game -> EntityModel.of(game,
-                            linkTo(methodOn(HotelResourceController.class).getHotel(game.getId())).withSelfRel(),
+            List<EntityModel<Hotel>> hotels = HotelApiRepository.getHotelID(title).stream().map(
+                    hotel -> EntityModel.of(hotel,
+                            linkTo(methodOn(HotelResourceController.class).getHotel(hotel.getId())).withSelfRel(),
                             linkTo(methodOn(HotelResourceController.class).getAllHotel(title)).withRel("get-all"))
             ).collect(Collectors.toList());
 
-            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getAllHotel(title)).withSelfRel()));
+            return ResponseEntity.ok(CollectionModel.of(hotels, linkTo(methodOn(HotelResourceController.class).getAllHotel(title)).withSelfRel()));
         } catch (Exception exc) {
             return null;
         }
@@ -65,6 +65,7 @@ public class HotelResourceController {
         EntityModel<Hotel> model = EntityModel.of(HotelApiRepository.getInfo(id));
         final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
         model.add(Link.of(uriString, "self"));
+        model.add()
 
         return ResponseEntity.ok(model);
     }catch (Exception exc){
@@ -81,12 +82,12 @@ public class HotelResourceController {
     @GetMapping("/attractions/{countryTitle}")
     public ResponseEntity<CollectionModel<EntityModel<attraction>>> getAttractions(@PathVariable String countryTitle) {
         try {
-            List<EntityModel<attraction>> games = HotelApiRepository.getSuggesionRep(countryTitle).stream().map(
-                    game -> EntityModel.of(game,
+            List<EntityModel<attraction>> hotels = HotelApiRepository.getSuggesionRep(countryTitle).stream().map(
+                    hotel -> EntityModel.of(hotel,
                             linkTo(methodOn(HotelResourceController.class).getAllHotel(countryTitle)).withRel("get-all"))
             ).collect(Collectors.toList());
 
-            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getAllHotel(countryTitle)).withSelfRel()));
+            return ResponseEntity.ok(CollectionModel.of(hotels, linkTo(methodOn(HotelResourceController.class).getAllHotel(countryTitle)).withSelfRel()));
         } catch (Exception exc) {
             return null;
         }
@@ -101,25 +102,17 @@ public class HotelResourceController {
     @GetMapping("/rating/{id}")
     public ResponseEntity<CollectionModel<EntityModel<reiting>>> getReiting(@PathVariable int id) {
         try {
-            List<EntityModel<reiting>> games = HotelApiRepository.getListReiting(id).stream().map(
-                    game -> EntityModel.of(game,
+            List<EntityModel<reiting>> hotels = HotelApiRepository.getListReiting(id).stream().map(
+                    hotel -> EntityModel.of(hotel,
                             linkTo(methodOn(HotelResourceController.class).getHotel(id)).withRel("get-all"))
             ).collect(Collectors.toList());
 
-            return ResponseEntity.ok(CollectionModel.of(games, linkTo(methodOn(HotelResourceController.class).getHotel(id)).withSelfRel()));
+            return ResponseEntity.ok(CollectionModel.of(hotels, linkTo(methodOn(HotelResourceController.class).getHotel(id)).withSelfRel()));
         } catch (Exception exc) {
             return null;
         }
     }
 
-
-    //@DeleteMapping("/{title}")
-//    public ResponseEntity<CollectionModel<EntityModel<Game>>> deleteGame(@PathVariable String title){
-//        boolean isDel = rp.deleteGame(title);
-//        if(!isDel)
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        return getGameAll();
-  //  }
 
    
 
