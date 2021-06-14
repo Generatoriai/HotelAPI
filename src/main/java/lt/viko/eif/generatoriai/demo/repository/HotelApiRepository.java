@@ -20,7 +20,13 @@ public class HotelApiRepository {
     private static String response;
     private static List<Hotel> listHotelMain;
 
-
+    /**
+     * Method for getting the lattitude from CoordinatesAPI class.
+     * Parses the response to JSONObject to latitude and longitude
+     * @param titleCountry name of the city to get coordinates from
+     * @throws IOException Signals that an I/O exception of some sort has occurred.
+     * @throws ParseException Signals that an error has been reached unexpectedly while parsing.
+     */
     static void getLatitude(String titleCountry) throws IOException, ParseException {
         JSONParser parse = new JSONParser();
         JSONObject jsonObject = (JSONObject) parse.parse(CoordinatesAPI.getResponse(titleCountry));
@@ -43,7 +49,14 @@ public class HotelApiRepository {
         response = HotelAPI.getHotel((Double) mainObject.get("lat"), (Double) mainObject.get("lng"));
     }
 
-    //iraso zmogus id
+    /**
+     * Method for getting information about hotel from the InfoAPI class.
+     * Parses the Response to JSONObject and returns the information about hotel from the given ID.
+     * @param id identification number of the hotel
+     * @return
+     * @throws IOException Signals that an I/O exception of some sort has occurred.
+     * @throws ParseException Signals that an error has been reached unexpectedly while parsing.
+     */
     public static Hotel getInfo(int id) throws IOException, ParseException {
         //info hotel one
         JSONParser parse = new JSONParser();
@@ -97,27 +110,22 @@ public class HotelApiRepository {
             trasnport.add(new Transport(transportCategory,locations));
         }
 
-
-
-
-
-
         Hotel hotelinfo = new Hotel(titleHotel,ratingHotel,address,id,priceMin,roomType,feature,
         trasnport,averagePeopleReit,numPeople);
         return hotelinfo;
-       // System.out.println(InfoAPI.getHotelInfo(id));
 
-//        JSONArray jsonarr_1 = (JSONArray) jsonObject.get("result");
-//        for(int i=0; i<jsonarr_1.size();i++){
-//            System.out.println(jsonarr_1.get(i));
-//        }
     }
 
+    /**
+     *  Method for getting the hotel ID.
+     *  Parses the response to JSONObject and returns json array list containing hotel objects.
+      * @param title name of the city
+     * @return listHotelMain a list containing json array's
+     * @throws Exception a RuntimeException
+     */
    public static List<Hotel> getHotelID(String title) throws Exception {
         getLatitude(title);
         JSONParser parse = new JSONParser();
-        //grazint visus id, ir isrenkam info
-
 
         JSONObject jsonObject = (JSONObject)parse.parse(response);
         JSONObject jsonarr_1 = (JSONObject) jsonObject.get("data");
@@ -125,34 +133,19 @@ public class HotelApiRepository {
         JSONObject jsonarr_3 = (JSONObject) jsonarr_2.get("searchResults");
         JSONArray jsonarr = (JSONArray) jsonarr_3.get("results");
         listHotelMain = getHotelAll(jsonarr);
+
         return listHotelMain;
-
-        //for gaut visus id
-//        JSONObject mainOb = (JSONObject) jsonarr.get(0);
-//        int id  = Integer.parseInt(String.valueOf(mainOb.get("id")));
-
-//        System.out.println(id);
-//        getInfo(id);
-//
-//        for(int i=0; i<jsonarr_1.size();i++){
-//            System.out.println(jsonarr_1.get(i));
-//        }
-//
-//        JSONObject listObject = (JSONObject) jsonarr_1.get(0);
-//        JSONObject mainObject = (JSONObject) listObject.get("location");
-//
-//        System.out.println("Longitude - " + mainObject.get("lng"));
-//        System.out.println("Latitude  - " + mainObject.get("lat"));
-
-
-//        JSONObject jsonObject = (JSONObject) parse.parse(HotelAPI));
-//
-        // System.out.println(InfoAPI.getHotelInfo(424023));
-
     }
 
 
-
+    /**
+     * Method for getting all the hotels from the API.
+     * Gets address, name, star rating and id from the given json array
+     *
+     * @param jsonArr array containing hotel objects.
+     * @return hotelList list containing Hotel objects
+     * @throws Exception a runtimeException
+     */
     public static List<Hotel> getHotelAll(JSONArray jsonArr) throws Exception{
         List<Hotel> hotelList = new ArrayList<>();
 
@@ -165,6 +158,14 @@ public class HotelApiRepository {
         return hotelList;
     }
 
+    /**
+     * Method for getting nearby attractions of the specified city from InfoAPI class.
+     * Parses the response from the api to JSONObject and returns a string containing
+     * information about nearby attractions.
+     * @param countryTitle name of the city
+     * @return stringList list containing information about nearby attractions
+     * @throws Exception a runtimeException
+     */
     public static List<attraction> getSuggesionRep(String countryTitle) throws Exception{
         JSONParser parse = new JSONParser();
         List<attraction> stringList = new ArrayList<>();
@@ -187,6 +188,15 @@ public class HotelApiRepository {
         return stringList;
     }
 
+    /**
+     * Method for getting comments and rating about the hotel from HotelAPI class specified by its id.
+     * Parses the response from the api to JSONObject and returns a list containing comments and reviews about
+     * a specific hotel.
+     * @param id identification of the hotel
+     * @return reitingList a list containing all the comments and ratings of a specific hotel
+     * @throws IOException Signals that an I/O exception of some sort has occurred.
+     * @throws ParseException Signals that an error has been reached unexpectedly while parsing.
+     */
     public static List<reiting> getListReiting(int id) throws IOException, ParseException {
         JSONParser parse = new JSONParser();
         List<reiting> reitingList = new ArrayList<>();
